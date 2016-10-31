@@ -275,6 +275,7 @@ func (c *clientImpl) watch(url string, labelSelector string, stopCh <-chan bool)
 				var eventList interface{}
 				if err := json.NewDecoder(res.Body).Decode(&eventList); err != nil {
 					if !strings.Contains(err.Error(), "net/http: request canceled") {
+						log.Infof("[TT] URL: %q, queryData: %v", url, queryData)
 						errCh <- fmt.Errorf("failed to decode watch event: GET %q : %v", url, err)
 					}
 					finishCh <- true
